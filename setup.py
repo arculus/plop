@@ -16,7 +16,9 @@ setup(
     author="Ben Darnell",
     url="https://github.com/bdarnell/plop",
     install_requires=[
-        'tornado',
         'six',
     ],
+    extras_require={
+        'VIEWER': ['tornado'],
+    },
     )

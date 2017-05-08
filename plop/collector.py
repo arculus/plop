@@ -8,10 +8,12 @@ from six.moves import _thread
 import time
 import argparse
 import six
-import plop.platform
 import threading
 import shutil
 import json
+
+import plop.platform
+from plop.callgraph import profile_to_json
 
 
 class Collector(object):
@@ -62,7 +64,6 @@ class Collector(object):
         data = formatter.format(self)
         
         # Daten nach json transformieren und dumpen
-        from plop.viewer import profile_to_json
         data_dict = profile_to_json(data=data)
         data_file = os.path.join(target_dir, 'data.json')
         open(data_file, 'w').write(json.dumps(data_dict))
