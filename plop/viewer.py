@@ -43,11 +43,14 @@ class DataHandler(RequestHandler):
     def get(self):
         self.write(profile_to_json(self.get_argument('filename')))
 
-def profile_to_json(filename):
-    root = os.path.abspath(options.datadir) + os.path.sep
-    abspath = os.path.abspath(os.path.join(root, filename))
-    assert (abspath + os.path.sep).startswith(root)
-    graph = CallGraph.load(abspath)
+def profile_to_json(filename=None, data=None):
+    if data is None:
+        root = os.path.abspath(options.datadir) + os.path.sep
+        abspath = os.path.abspath(os.path.join(root, filename))
+        assert (abspath + os.path.sep).startswith(root)
+        graph = CallGraph.load(filename=abspath)
+    else:
+        graph = CallGraph.load(data=data)
 
     total = sum(stack.weights['calls'] for stack in graph.stacks)
     top_stacks = graph.stacks
